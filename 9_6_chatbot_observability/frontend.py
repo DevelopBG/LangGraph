@@ -86,9 +86,14 @@ if userinput:
     with st.chat_message('user'):
         st.text(userinput)
 
-    config = {'configurable':{'thread_id': st.session_state['thread_id']}}
-
-
+    # config = {'configurable':{'thread_id': st.session_state['thread_id']}}
+    # modification for LangSmith------------------
+    config = {'configurable':{'thread_id': st.session_state['thread_id']},
+                "metadata": {
+                    "thread_id": st.session_state["thread_id"]
+                },
+                "run_name": "chat_turn", # it changes the name of the trace in langsmith
+              }
     with st.chat_message("assistant"):
         ai_message = st.write_stream(
             message_chunk.content for message_chunk, metadata in chatbot.stream(
