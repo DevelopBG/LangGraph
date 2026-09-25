@@ -5,6 +5,7 @@ from langchain_core.messages import BaseMessage,HumanMessage
 from dotenv import load_dotenv
 from langgraph.checkpoint.sqlite import SqliteSaver # to save information in the RAM
 import sqlite3
+import requests
 
 
 

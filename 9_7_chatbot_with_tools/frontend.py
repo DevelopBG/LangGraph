@@ -1,6 +1,6 @@
 import streamlit as st
-from langraph_database_backend import chatbot,retrieve_all_threads
-from langchain_core.messages import BaseMessage,HumanMessage
+from chatbot_tool_backend import chatbot,retrieve_all_threads
+from langchain_core.messages import BaseMessage,HumanMessage, AIMessage
 import uuid # to generate random random id
 
 
@@ -95,13 +95,15 @@ if userinput:
                 "run_name": "chat_turn_with_tools", # it changes the name of the trace in langsmith
               }
     with st.chat_message("assistant"):
-        ai_message = st.write_stream(
-            message_chunk.content for message_chunk, metadata in chatbot.stream(
+        def ai_only_stream():
+            for message_chunk, metadata in chatbot.stream(
                 {'messages': [HumanMessage(content= userinput)]},
                 config= config,
                 stream_mode="messages"
-            )
-        )
+            ):
+                if isinstance(message_chunk, AIMessage):
+                    yield message_chunk.content
+        ai_message = st.write_stream(ai_only_stream)
     st.session_state['message_history'].append({'role':'assistant','content':ai_message})
     
 
