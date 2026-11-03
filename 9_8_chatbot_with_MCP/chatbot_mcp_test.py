@@ -52,7 +52,9 @@ class chat_state(TypedDict):
 async def build_graph():
 
     tools = await client.get_tools()
-    print(tools)
+    print([i.name for i in tools])
+
+    # print(tools)
 
     llm_with_tools = llm.bind_tools(tools)
 
@@ -85,7 +87,7 @@ async def main():
     chatbot = await build_graph()
 
 
-    ini_state = {"messages":HumanMessage(content="Do you have access to internet via tavily?")}
+    ini_state = {"messages":HumanMessage(content=f"What is today's best news about AI?")}
     response = await chatbot.ainvoke(ini_state)
 
     print(response['messages'][-1].content)

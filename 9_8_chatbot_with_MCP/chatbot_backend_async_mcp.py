@@ -39,7 +39,7 @@ def submit_async_task(coro):
 # -------------------
 # 1. LLM
 # -------------------
-llm = ChatOpenAI()
+llm = ChatOpenAI(model = "gpt-5")
 
 # -------------------
 # 2. Tools

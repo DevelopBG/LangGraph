@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import sys
+
 from fastmcp import FastMCP
+
 
 mcp = FastMCP("arith")
 
@@ -18,6 +21,7 @@ def _as_number(x):
 @mcp.tool()
 async def add(a: float, b: float) -> float:
     """Return a + b."""
+    print(f" summation of {a} and {b}", file=sys.stderr)  # stdout is reserved for the MCP stdio protocol
     return _as_number(a) + _as_number(b)
 
 
