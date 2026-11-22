@@ -44,7 +44,6 @@ def _get_retriever(thread_id: Optional[str]):
 def ingest_pdf(file_bytes: bytes, thread_id: str, filename: Optional[str] = None) -> dict:
     """
     Build a FAISS retriever for the uploaded PDF and store it for the thread.
-
     Returns a summary dict that can be surfaced in the UI.
     """
     if not file_bytes:
